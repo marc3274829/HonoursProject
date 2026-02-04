@@ -13,8 +13,32 @@
         have signed a consent form and are completely aware of what you are 
         being asked to do during this study.</p>
         <div class="button">
-            <button class="wButton" type="start">Start</button>
+            <button id="startBtn" class="wButton" type="button">Start</button>
         </div>
     </div>
+<script>
+        const pages = [
+            "login-ML.html",
+            "login-PP.html",
+            "login-PM.html",
+            "login-OTP.html",
+        ];
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        document.getElementById("startBtn").addEventListener("click", function() {
+            const randomOrder = shuffle([...pages]);
+
+            localStorage.setItem("studyOrder", JSON.stringify(randomOrder));
+            localStorage.setItem("studyIndex", "0");
+            window.location.href = randomOrder[0];
+        });
+</script>
 </body>
 </html>
