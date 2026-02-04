@@ -18,10 +18,15 @@
                     <input type="text" required>
             </div>
             <div class="button">
-                <button class="submit" type="submit">Submit</button>
+                <button id="sButton" class="submit" type="submit">Submit</button>
             </div>
         </form>
     </div>
 
 </body>
+<script>
+    document.getElementById("sButton").addEventListener("click", function() {
+            window.location.href = "confirmationOTP.html";
+        });
+</script>
 </html>

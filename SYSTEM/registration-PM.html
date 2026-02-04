@@ -21,10 +21,15 @@
         <p>Repeat Password</p>
         <input type="password" id="regRepeatPassword" required>
 
-        <button type="submit">Submit</button>
+        <button type="submit" id="sButton">Submit</button>
     </form>
 </div>
 
 <script src="script-PM.js"></script>
 </body>
+<script>
+    document.getElementById("sButton").addEventListener("click", function() {
+            window.location.href = "login-PM.html";
+        });
+</script>
 </html>

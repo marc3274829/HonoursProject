@@ -18,10 +18,14 @@
         <p>Password</p>
         <input type="password" id="loginPassword" required>
 
-        <button type="submit">Submit</button>
+        <button id="sButton" type="submit">Submit</button>
     </form>
 </div>
 
-<script src="script-PM.js"></script>
+<script>
+    document.getElementById("sButton").addEventListener("click", function() {
+            window.location.href = "confirmationPM.html";
+        });
+</script>
 </body>
 </html>

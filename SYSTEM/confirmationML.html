@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Confirmation - Password Manager</title>
+    <title>Confirmation - Magic Link</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,7 +11,28 @@
         <p>Please complete this questionnaire linked below answering questions about your experience with it.</p>
         <div class="qrCode">
         </div>
-        <button class="confirmationButton">Next</button>
+        <button class="confirmationButton" onclick="goToNextPage()">Next</button>
     </div>
 </body>
+<script>
+    function goToNextPage() {
+
+        let order = JSON.parse(localStorage.getItem("studyOrder"));
+        let index = parseInt(localStorage.getItem("studyIndex"));
+
+        index++;
+
+        if (index < order.length) {
+            // Save new position
+            localStorage.setItem("studyIndex", index);
+
+            // Go to next login
+            window.location.href = order[index];
+
+        } else {
+            // Finished → go to thank you page
+            window.location.href = "thankyou.html";
+        }
+    }
+</script>
 </html>

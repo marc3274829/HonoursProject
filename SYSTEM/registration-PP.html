@@ -7,24 +7,35 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<div class="formBox">
-    <h2>Register Account</h2>
-
-    <form id="registerForm">
-        <p>Username</p>
-        <input type="text" id="regUsername" required>
-
-        <p>Password</p>
-        <input type="password" id="regPassword" required>
-
-        <p>Repeat Password</p>
-        <input type="password" id="regRepeatPassword" required>
-
-        <button type="submit">Submit</button>
-    </form>
+<div class="pageContainer">
+    <div class="contentWrapper">
+        <div class="formBox">
+            <h2>Register Account</h2>
+            <form id="registerForm">
+                <label>Username</label>
+                <input type="text" id="regUsername">
+                <label>Password</label>
+                <input type="password" id="regPassword">
+                <label>Repeat Password</label>
+                <input type="password" id="regRepeatPassword">
+                <button type="button" class="submit" id="sButton">Submit</button>
+            </form>
+        </div>
+        <div class="rulesBox">
+            <h3>Your password must include:</h3>
+            <ul>
+                <li>Lowercase and Uppercase</li>
+                <li>Numerals</li>
+                <li>Special Characters: @, #, !</li>
+                <li>At least 8 Characters</li>
+            </ul>
+        </div>
+    </div>
 </div>
-
-<script src="script-PM.js"></script>
+<script>
+    document.getElementById("sButton").addEventListener("click", function() {
+            window.location.href = "login-PP.html";
+        });
+</script>
 </body>
 </html>

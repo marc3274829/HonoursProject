@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
 <div class="formBox">
     <h2>Log-in</h2>
 
@@ -18,10 +17,13 @@
         <p>Password</p>
         <input type="password" id="loginPassword" required>
 
-        <button type="submit">Submit</button>
+        <button id="sButton" type="submit">Submit</button>
     </form>
 </div>
-
-<script src="script-PM.js"></script>
 </body>
+<script>
+    document.getElementById("sButton").addEventListener("click", function() {
+            window.location.href = "confirmationPP.html";
+        });
+</script>
 </html>
