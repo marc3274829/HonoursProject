@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="script-ML.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magic Link Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="formBox">
+        <div class="formHeader">
+            <h2> Log-in </h2>
+        </div>
+        <form method="POST" action="/send-magic-link">
+            <div class="formInput">
+                <p>Email</p>
+                    <input type="text" required>
+            </div>
+            <div class="button">
+                <button class="submit" type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>
