@@ -9,35 +9,15 @@
 <body>
     <div class="WelcomeSection">
         <h1 id="WelcomeH1"> Welcome to the Authentication Method Study </h1>
-        <p id="WelcomeP">Please ensure you have read the information sheet and 
-        have signed a consent form and are completely aware of what you are 
-        being asked to do during this study.</p>
+        <p id="WelcomeP">Please ensure that you have carefully read the information sheet, filled out the provided consent form, 
+            and are fully aware of your role in this study.</p>
         <div class="button">
             <button id="startBtn" class="wButton" type="button">Start</button>
         </div>
     </div>
 <script>
-        const pages = [
-            "registration-ML.html",
-            "registration-PP.html",
-            "registration-PM.html",
-            "registration-OTP.html",
-        ];
-
-        function shuffle(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
-
-        document.getElementById("startBtn").addEventListener("click", function() {
-            const randomOrder = shuffle([...pages]);
-
-            localStorage.setItem("studyOrder", JSON.stringify(randomOrder));
-            localStorage.setItem("studyIndex", "0");
-            window.location.href = randomOrder[0];
+    document.getElementById("startBtn").addEventListener("click", function() {
+            window.location.href = "index2.html";
         });
 </script>
 </body>
