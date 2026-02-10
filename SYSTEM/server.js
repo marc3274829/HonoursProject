@@ -25,6 +25,14 @@ app.post("/register", async (req, res) => {
     const { email, password, repeatPassword } = req.body;
     console.log("BODY:", req.body);
 
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#!])[A-Za-z\d@#!]{8,}$/;
+
+    if (!passwordRegex.test(password)) {
+      return res.status(400).send(
+        "Password must contain uppercase, lowercase, number, @#! and be at least 8 characters"
+      );
+    }
+
     if (password !== repeatPassword) {
       return res.send("Passwords do not match");
     }
