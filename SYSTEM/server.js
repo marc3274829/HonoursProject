@@ -23,6 +23,7 @@ app.post("/register", async (req, res) => {
 
   try {
     const { email, password, repeatPassword } = req.body;
+    console.log("BODY:", req.body);
 
     if (password !== repeatPassword) {
       return res.send("Passwords do not match");
@@ -49,5 +50,34 @@ app.post("/register", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
+
+app.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    console.log("BODY:", req.body);
+
+    const [rows] = await pool.query(
+      "SELECT * FROM users WHERE email = ?",
+      [email]
+    );
+
+    if (rows.length === 0) {
+      return res.send("Invalid email or password");
+    }
+
+    const user = rows[0];
+
+    if (password !== user.password) {
+      return res.send("Invalid email or password");
+    }
+
+    res.send("Login successful");
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
+
 
 
