@@ -148,7 +148,6 @@ app.get("/magic-login", async (req, res) => {
       return res.send("No token provided");
     }
 
-    // Check token
     const [rows] = await pool.query(
       `
       SELECT *
@@ -169,13 +168,11 @@ app.get("/magic-login", async (req, res) => {
 
     const magic = rows[0];
 
-    // Mark used
     await pool.query(
       "UPDATE magic_links SET used = 1 WHERE id = ?",
       [magic.id]
     );
 
-    // Log in user
     req.session.user = magic.email;
 
     res.json({

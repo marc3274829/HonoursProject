@@ -14,6 +14,7 @@
         <p id="modalMessage"></p>
         <button id="modalOk" style="margin-top:15px; padding:5px 15px;">OK</button>
     </div>
+    </div>
     <div class="formBox">
         <div class="formHeader">
             <h2> Register Account </h2>
@@ -29,4 +30,46 @@
         </div>
     </div>
 </body>
+<script>
+    const emailInput = document.getElementById('emailInput');
+    const repeatEmailInput = document.getElementById('repeatEmailInput');
+    const submitButton = document.getElementById('sButton');
+
+    const modal = document.getElementById('modal');
+    const modalMessage = document.getElementById('modalMessage');
+    const modalOk = document.getElementById('modalOk');
+
+    function showModal(message) {
+        modalMessage.textContent = message;
+        modal.style.display = 'flex';
+    }
+
+    modalOk.addEventListener('click', () => {
+        modal.style.display = 'none';
+        if (modalMessage.textContent === "Registration successful!") {
+            window.location.href = "login-ML.html";
+        }
+    });
+
+    submitButton.addEventListener('click', () => {
+        const email = emailInput.value.trim();
+        const repeatEmail = repeatEmailInput.value.trim();
+
+        if (!email || !repeatEmail) {
+            showModal("Please fill in both fields.");
+            return;
+        }
+
+        if (email !== repeatEmail) {
+            showModal("Emails do not match.");
+            return;
+        }
+
+        if (email === "authenticationtestemail123@gmail.com") {
+            showModal("Registration successful!");
+        } else {
+            showModal("Invalid email. Registration failed.");
+        }
+    });
+</script>
 </html>
