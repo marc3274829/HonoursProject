@@ -5,6 +5,7 @@ const crypto = require("crypto");
 const session = require("express-session");
 const pool = require("./db");
 const transporter = require("./email");
+const otpStore = {};
 require("dotenv").config();
 
 const app = express();
@@ -186,6 +187,50 @@ app.get("/magic-login", async (req, res) => {
     res.status(500).send("Login failed");
   }
 });
+
+
+app.post('/send-otp', async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) return res.json({ success: false, message: "Email required" });
+
+  if (email !== "authenticationtestemail123@gmail.com") {
+    return res.json({ success: false, message: "Invalid email" });
+  }
+
+  const otp = Math.floor(100000 + Math.random() * 900000).toString(); 
+  otpStore[email] = otp;
+
+  try {
+    await transporter.sendMail({
+      to: email,
+      subject: "Your OTP Code",
+      html: `<p>Your OTP code is: <b>${otp}</b></p><p>Expires in 5 minutes</p>`
+    });
+
+    setTimeout(() => { delete otpStore[email]; }, 5*60*1000);
+
+    res.json({ success: true, message: "OTP sent! Check your email." });
+  } catch (err) {
+    console.error(err);
+    res.json({ success: false, message: "Error sending OTP" });
+  }
+});
+
+app.post('/verify-otp', (req, res) => {
+  const { email, otp } = req.body;
+
+  if (!email || !otp) return res.json({ success: false, message: "Email and OTP required" });
+
+  if (otpStore[email] && otpStore[email] === otp) {
+    delete otpStore[email];
+    req.session.user = email;
+    return res.json({ success: true, message: "OTP verified! Login successful." });
+  } else {
+    return res.json({ success: false, message: "Invalid OTP." });
+  }
+});
+
 
 
 
