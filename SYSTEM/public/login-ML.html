@@ -15,7 +15,7 @@
         <form method="POST" action="/send-magic-link">
             <div class="formInput">
                 <p>Email</p>
-                    <input type="text" required>
+                    <input type="email" name="email" required>
             </div>
             <div class="button">
                 <button id="sButton" class="submit" type="submit">Submit</button>
@@ -24,9 +24,4 @@
     </div>
 
 </body>
-<script>
-    document.getElementById("sButton").addEventListener("click", function() {
-            window.location.href = "confirmationML.html";
-        });
-</script>
 </html>
