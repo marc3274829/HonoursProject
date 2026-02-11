@@ -37,7 +37,6 @@ app.post("/register", async (req, res) => {
 
   try {
     const { email, password, repeatPassword } = req.body;
-    console.log("BODY:", req.body);
 
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#!])[A-Za-z\d@#!]{8,}$/;
 
@@ -76,7 +75,6 @@ app.post("/register", async (req, res) => {
 app.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log("BODY:", req.body);
 
     const [rows] = await pool.query(
       "SELECT * FROM users WHERE email = ?",
