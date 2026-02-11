@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
+const session = require("express-session");
 const pool = require("./db");
 const transporter = require("./email");
 require("dotenv").config();
@@ -10,6 +11,16 @@ const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: true,
+    secure: false
+  }
+}));
 
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -102,7 +113,8 @@ app.post("/send-magic-link", async (req, res) => {
       [email, token, expires]
     );
 
-    const link = `${process.env.BASE_URL}/magic-login?token=${token}`;
+    const link = `${process.env.BASE_URL}/login-ML.html?token=${token}`;
+
 
     await transporter.sendMail({
       to: email,
@@ -126,6 +138,58 @@ app.post("/send-magic-link", async (req, res) => {
     res.status(500).send("Error sending link");
   }
 });
+
+app.get("/magic-login", async (req, res) => {
+  try {
+
+    const { token } = req.query;
+
+    if (!token) {
+      return res.send("No token provided");
+    }
+
+    // Check token
+    const [rows] = await pool.query(
+      `
+      SELECT *
+      FROM magic_links
+      WHERE token = ?
+      AND used = 0
+      AND expires_at > NOW()
+      `,
+      [token]
+    );
+
+    if (rows.length === 0) {
+      return res.json({
+        success: false,
+        message: "Invalid or expired link"
+      });
+    }
+
+    const magic = rows[0];
+
+    // Mark used
+    await pool.query(
+      "UPDATE magic_links SET used = 1 WHERE id = ?",
+      [magic.id]
+    );
+
+    // Log in user
+    req.session.user = magic.email;
+
+    res.json({
+      success: true,
+      message: "Login successful",
+      email: magic.email
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Login failed");
+  }
+});
+
 
 
 
