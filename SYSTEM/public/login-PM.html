@@ -7,21 +7,104 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
+<div id="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; 
+    background:rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:1000;">
+    <div style="background:#fff; padding:20px 30px; border-radius:8px; text-align:center; min-width:250px;">
+        <p id="modalMessage"></p>
+        <button id="modalOk" style="margin-top:15px; padding:5px 15px;">OK</button>
+    </div>
+</div>
 <div class="formBox">
     <h2>Log-in</h2>
-
     <form id="loginForm">
         <div class="formInput">
             <p>Username</p>
-            <input type="text" required>
+            <input type="text" id="loginUsername" autocomplete="off" required>
             <p>Password</p>
-            <input type="password" required>
+            <input type="password" id="loginPassword" autocomplete="off" required>
         </div>
         <div class="button">
             <button class="submit" id="sButton" type="submit">Submit</button>
         </div>
     </form>
+     <div id="autofillTooltip"></div>
 </div>
+<script>
+const loginForm = document.getElementById('loginForm');
+const loginUsername = document.getElementById('loginUsername');
+const loginPassword = document.getElementById('loginPassword');
+const autofillTooltip = document.getElementById('autofillTooltip');
+
+const modal = document.getElementById('modal');
+const modalMessage = document.getElementById('modalMessage');
+const modalOk = document.getElementById('modalOk');
+
+function showAutofillTooltip(input){
+    const savedUsername = localStorage.getItem('pmUsername');
+    const savedPassword = localStorage.getItem('pmPassword');
+
+    if(savedUsername && savedPassword){
+        const maskedPassword = "•".repeat(savedPassword.length);
+        autofillTooltip.textContent = `Autofill: ${savedUsername} / ${maskedPassword}`;
+
+        const rect = input.getBoundingClientRect();
+        autofillTooltip.style.top = rect.bottom + window.scrollY + 5 + "px";
+        autofillTooltip.style.left = rect.left + window.scrollX + "px";
+
+        autofillTooltip.classList.add("show");
+    }
+}
+
+function hideAutofillTooltip(){
+    autofillTooltip.classList.remove("show");
+}
+
+loginUsername.addEventListener('focus', () => showAutofillTooltip(loginUsername));
+loginPassword.addEventListener('focus', () => showAutofillTooltip(loginPassword));
+
+loginUsername.addEventListener('blur', () => setTimeout(hideAutofillTooltip, 200));
+loginPassword.addEventListener('blur', () => setTimeout(hideAutofillTooltip, 200));
+
+autofillTooltip.addEventListener('click', () => {
+    const savedUsername = localStorage.getItem('pmUsername');
+    const savedPassword = localStorage.getItem('pmPassword');
+
+    loginUsername.value = savedUsername;
+    loginPassword.value = savedPassword;
+
+    hideAutofillTooltip();
+    showModal("Credentials autofilled.");
+});
+
+loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const enteredUsername = loginUsername.value;
+    const enteredPassword = loginPassword.value;
+
+    const savedUsername = localStorage.getItem('pmUsername');
+    const savedPassword = localStorage.getItem('pmPassword');
+
+    if(enteredUsername === savedUsername && enteredPassword === savedPassword){
+        showModal("Login successful!");
+        loginForm.reset();
+    } else {
+        showModal("Invalid username or password.");
+    }
+});
+
+function showModal(message){
+    modalMessage.textContent = message;
+    modal.style.display = "flex";
+}
+modalOk.addEventListener('click', () => {
+        if (modalMessage.textContent === "Login successful!") {
+        modal.style.display = 'none';
+        window.location.href = "confirmationPM.html";
+    } else {
+        modal.style.display = 'none';
+    }
+});
+</script>
 </body>
 </html>

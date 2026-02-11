@@ -275,4 +275,30 @@ h1 {
     margin-bottom: 10px;
 }
 
+/* Autofill Tooltip */
+
+#autofillTooltip {
+    position: absolute;
+    background: #000;
+    border: 1px solid #ccc;
+    padding: 6px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    box-shadow: 0px 2px 6px rgba(0,0,0,0.2);
+    z-index: 1000;
+    white-space: nowrap;
+    overflow: hidden;        
+    text-overflow: ellipsis; 
+    max-width: 250px;      
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+}
+
+#autofillTooltip.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
 
