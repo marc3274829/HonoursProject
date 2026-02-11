@@ -23,14 +23,11 @@
         index++;
 
         if (index < order.length) {
-            // Save new position
             localStorage.setItem("studyIndex", index);
 
-            // Go to next login
             window.location.href = order[index];
 
         } else {
-            // Finished → go to thank you page
             window.location.href = "studyCompletion.html";
         }
     }
