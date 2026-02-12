@@ -7,33 +7,52 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<body>
+
 <div id="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; 
     background:rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:1000;">
     <div style="background:#fff; padding:20px 30px; border-radius:8px; text-align:center; min-width:250px;">
         <p id="modalMessage"></p>
-        <div id="modalButtons" style="margin-top:15px;">
+        <div id="modalButtons" style="margin-top:15px;"></div>
+    </div>
+</div>
+
+<!-- Main Container -->
+<div class="pageContainer">
+    <div class="contentWrapper">
+        <div class="formBox">
+            <h2>Register Account</h2>
+            <form id="registerForm" autocomplete="off">
+                <div class="formInput">
+                    <p>Email</p>
+                    <input type="email" id="regUsername" required>
+                    <p>Password</p>
+                    <input type="password" id="regPassword" required>
+                    <p>Repeat Password</p>
+                    <input type="password" id="regRepeatPassword" required>
+                </div>
+                <div class="button">
+                    <button class="submit" type="submit" id="sButton">Submit</button>
+                </div>
+            </form>
+        </div>
+        <div class="passwordBox">
+            <h3>Choose a Password from this provided list:</h3>
+            <ul id="passwordList">
+                <li>password123</li>
+                <li>qwerty2024</li>
+                <li>Football99</li>
+                <li>London2023</li>
+                <li>BlueTiger!5</li>
+                <li>Coffee#42</li>
+                <li>K7!pZ4@Qx9Lm</li>
+                <li>R8$Wm2#KJ9Fa</li>
+                <li>PurpleHorse$Rides9</li>
+                <li>SilentForest@Night5</li>
+            </ul>
         </div>
     </div>
 </div>
-<div class="formBox">
-    <h2>Register Account</h2>
-
-    <form id="registerForm" autocomplete="off">
-        <div class="formInput">
-            <p>Username</p>
-            <input type="text" id="regUsername" required>
-            <p>Password</p>
-            <input type="password" id="regPassword" required>
-            <p>Repeat Password</p>
-            <input type="password" id="regRepeatPassword" required>
-        </div>
-        <div class="button">
-             <button class="submit" type="submit" id="sButton">Submit</button>
-        </div>
-    </form>
-</div>
-
-
 </body>
 <script>
 const form = document.getElementById('registerForm');
@@ -47,6 +66,19 @@ form.addEventListener('submit', (e) => {
     const username = document.getElementById('regUsername').value;
     const password = document.getElementById('regPassword').value;
     const repeatPassword = document.getElementById('regRepeatPassword').value;
+
+    const allowedPasswords = Array.from(
+        document.querySelectorAll("#passwordList li")
+    ).map(item => item.textContent.trim());
+
+    if (!allowedPasswords.includes(password)) {
+        showModal(
+            "Please choose a password from the provided list.",
+            ["OK"],
+            [() => hideModal()]
+        );
+        return;
+    }
 
     if(password !== repeatPassword){
         showModal("Passwords do not match!", ["OK"], [() => hideModal()]);

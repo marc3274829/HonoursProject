@@ -46,17 +46,21 @@ app.post("/register", async (req, res) => {
       );
     }
 
-    if (password !== repeatPassword) {
-      return res.send("Passwords do not match");
-    }
+    const required = ["k", "e", "y", "w", "o", "r", "d"];
+    const lowerPassword = password.toLowerCase();
 
-    const [existing] = await pool.query(
-      "SELECT id FROM users WHERE email = ?",
-      [email]
+    const hasAllLetters = required.every(letter =>
+      lowerPassword.includes(letter)
     );
 
-    if (existing.length > 0) {
-      return res.send("Email already registered");
+    if (!hasAllLetters) {
+      return res.status(400).send(
+        "Password must contain all letters from 'KEYWORD'"
+     );
+    }
+
+    if (password !== repeatPassword) {
+      return res.send("Passwords do not match");
     }
 
     await pool.query(
