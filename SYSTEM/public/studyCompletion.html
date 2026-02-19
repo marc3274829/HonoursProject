@@ -2,15 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Confirmation - Magic Link</title>
+    <title>Completion</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="confirmationContainer">
         <h2>Thank you for completing the study</h2>
         <p>Please complete the questionnaire linked below, providing feedback on your experience and comparisons across all authentication methods.</p>
-        <div class="qrCode">
-        </div>
+        <button class="confirmationButton" onclick="goToSurvey()" id="surveyBtn">Go To Survey</button>
     </div>
 </body>
+<script>    
+    function goToSurvey() {
+            window.open(
+                "https://forms.office.com/Pages/ResponsePage.aspx?id=8l9CbGVo30Kk245q9jSBPUZnONgdRThIj8FyDMz0oZxUQUs3MURCU0YwUE1LTVozQjNRSTZUMTU1US4u",
+                "_blank"
+            );
+
+            document.getElementById("surveyBtn").style.display = "none";
+    }
+</script>
 </html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Human Verification</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="captcha-body">
+
+    <div class="captcha-wrapper">
+        <div class="captcha-card">
+            <p class="captcha-subtitle">
+                Please confirm you are not a robot to continue
+            </p>
+
+            <form class="captcha-form" action="/verify-captcha-PM" method="POST">
+                <div class="captcha-box">
+                    <div class="g-recaptcha"
+                         data-sitekey="6Lds1XAsAAAAAG24_P-4ZqiMsVryi1eKNICtXkLL">
+                    </div>
+                </div>
+
+                <button type="submit" class="captcha-button">
+                    Continue
+                </button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

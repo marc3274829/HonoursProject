@@ -6,6 +6,8 @@ const session = require("express-session");
 const pool = require("./db");
 const transporter = require("./email");
 const otpStore = {};
+const bodyParser = require("body-parser");
+const axios = require("axios");
 require("dotenv").config();
 
 const app = express();
@@ -230,6 +232,130 @@ app.post('/verify-otp', (req, res) => {
     return res.json({ success: true, message: "OTP verified! Login successful." });
   } else {
     return res.json({ success: false, message: "Invalid OTP." });
+  }
+});
+
+app.post("/verify-captcha-ML", async (req, res) => {
+  try {
+    const token = req.body["g-recaptcha-response"];
+
+    if (!token) {
+      return res.send("Captcha is required.");
+    }
+
+    const response = await axios.post(
+      "https://www.google.com/recaptcha/api/siteverify",
+      null,
+      {
+        params: {
+          secret: process.env.RECAPTCHA_SECRET,
+          response: token
+        }
+      }
+    );
+
+    if (response.data.success) {
+      return res.redirect("/login-ML.html");
+    } else {
+      return res.send("Captcha failed. Try again.");
+    }
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Verification error");
+  }
+});
+
+app.post("/verify-captcha-OTP", async (req, res) => {
+  try {
+    const token = req.body["g-recaptcha-response"];
+
+    if (!token) {
+      return res.send("Captcha is required.");
+    }
+
+    const response = await axios.post(
+      "https://www.google.com/recaptcha/api/siteverify",
+      null,
+      {
+        params: {
+          secret: process.env.RECAPTCHA_SECRET,
+          response: token
+        }
+      }
+    );
+
+    if (response.data.success) {
+      return res.redirect("/login-OTP.html");
+    } else {
+      return res.send("Captcha failed. Try again.");
+    }
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Verification error");
+  }
+});
+
+app.post("/verify-captcha-PM", async (req, res) => {
+  try {
+    const token = req.body["g-recaptcha-response"];
+
+    if (!token) {
+      return res.send("Captcha is required.");
+    }
+
+    const response = await axios.post(
+      "https://www.google.com/recaptcha/api/siteverify",
+      null,
+      {
+        params: {
+          secret: process.env.RECAPTCHA_SECRET,
+          response: token
+        }
+      }
+    );
+
+    if (response.data.success) {
+      return res.redirect("/login-PM.html");
+    } else {
+      return res.send("Captcha failed. Try again.");
+    }
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Verification error");
+  }
+});
+
+app.post("/verify-captcha-PP", async (req, res) => {
+  try {
+    const token = req.body["g-recaptcha-response"];
+
+    if (!token) {
+      return res.send("Captcha is required.");
+    }
+
+    const response = await axios.post(
+      "https://www.google.com/recaptcha/api/siteverify",
+      null,
+      {
+        params: {
+          secret: process.env.RECAPTCHA_SECRET,
+          response: token
+        }
+      }
+    );
+
+    if (response.data.success) {
+      return res.redirect("/login-PP.html");
+    } else {
+      return res.send("Captcha failed. Try again.");
+    }
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Verification error");
   }
 });
 
