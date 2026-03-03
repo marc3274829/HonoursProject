@@ -12,7 +12,7 @@
     </div>
     <div class="emailReminder">
         Your email is:<br>
-        <Strong>authenticationtestemail123@gmail.com</Strong>
+        <Strong>user@gmail.com</Strong>
     </div>
     <div class="pageContainer">
         <div id="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; 
@@ -28,13 +28,14 @@
                 <h2>Register Account</h2>
                 <form action="/register" method="POST" id="registerForm" autocomplete="off">
                     <label>Email</label>
-                    <input type="text" name="email" id="regUsername" required>
+                    <input type="email" name="email" id="regUsername" autocomplete="off" required>
                     <label>Password</label>
                     <input type="text" value="keyword" name="password" id="regPassword" required>
                     <label>Repeat Password</label>
                     <input type="text" value="keyword" name="repeatPassword" id="regRepeatPassword" required>
                     <button type="submit" class="submit" id="sButton">Submit</button>
                 </form>
+                <p id="attemptDisplay">Attempts remaining: 3</p>
             </div>
             <div class="rulesBox">
                 <h3>Please use and change the provided keyword to create a password</h3>
@@ -54,6 +55,9 @@ const form = document.getElementById('registerForm');
 const modal = document.getElementById('modal');
 const modalMessage = document.getElementById('modalMessage');
 const modalOk = document.getElementById('modalOk');
+const attemptDisplay = document.getElementById('attemptDisplay');
+
+let attempts = 3;
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault(); 
@@ -85,9 +89,26 @@ modalOk.addEventListener('click', () => {
     if (modalMessage.textContent === "Registration successful") {
         modal.style.display = 'none';
         window.location.href = "captchaPP.html";
-    } else {
+    } 
+    
+    if (modalMessage.textContent === "You have ran out of attempts, we will now skip you to the questionnaire") {
         modal.style.display = 'none';
+        window.location.href = "confirmationPP.html";
+        return;
+    }
+
+    modal.style.display = 'none';
+    attempts--;
+    updateAttemptDisplay();
+
+    if (attempts <= 0) {
+        showModal("You have ran out of attempts, we will now skip you to the questionnaire");
+        return;
     }
 });
+
+function updateAttemptDisplay() {
+    attemptDisplay.textContent = "Attempts remaining: " + attempts;
+}
 </script>
 </html>
