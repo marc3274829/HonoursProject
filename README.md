@@ -57,11 +57,11 @@ The system was used to:
 
 ## Project Structure
 
-SYSTEM/ 
-└── (Node.js application) 
-  ├── routes/ # Application routes 
-  ├── controllers/ # Business logic 
-  ├── models/ # Database interaction 
-  ├── public/ # Static frontend files (HTML, CSS, JS) 
-  ├── config/ # Configuration files 
-  └── app.js # Entry point
+SYSTEM/ <br>
+└── (Node.js application) <br>
+  ├── routes/ # Application routes <br>
+  ├── controllers/ # Business logic <br>
+  ├── models/ # Database interaction <br>
+  ├── public/ # Static frontend files (HTML, CSS, JS) <br>
+  ├── config/ # Configuration files <br>
+  └── app.js # Entry point <br>
