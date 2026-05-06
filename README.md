@@ -1,12 +1,67 @@
-# HonoursProject
+# Authentication Methods Evaluation System
 
-This project contains the front and back end implementation for both Password and Passwordless Authentication.
+## Overview
+The Authentication Methods Evaluation System is a full-stack web application designed to implement and compare multiple authentication approaches, including both traditional password-based and modern passwordless methods.
 
-## Structure
-- 'public/' - HTML pages
-- 'assets/css/' - Stylesheets
-- 'assets/js/' - JavaScript logic
+The project focuses on analysing the trade-offs between **security and usability**, providing a framework to evaluate how different authentication mechanisms perform in real-world scenarios.
 
-## How to Run
+---
 
+## Features
 
+- Implementation of multiple authentication methods:
+  - Password-based authentication
+  - Passwordless authentication
+- User authentication flows and validation
+- Comparative evaluation of authentication methods
+- Usability study integration
+- Security analysis of each method
+- Data storage and management using a relational database
+
+---
+
+## Project Goals
+
+- Explore the balance between **user experience and system security**
+- Evaluate how different authentication methods impact usability
+- Identify strengths and weaknesses of modern authentication approaches
+- Provide recommendations based on empirical findings
+
+---
+
+## Tech Stack
+
+**Frontend:**
+- HTML
+- CSS
+- JavaScript
+
+**Backend:**
+- Node.js
+- Express.js
+
+**Database:**
+- MySQL
+
+---
+
+## Evaluation Approach
+
+The system was used to:
+- Conduct usability testing across different authentication methods
+- Analyse user interaction and efficiency
+- Compare security characteristics of each method
+- Identify trade-offs between convenience and protection
+
+---
+
+## Project Structure
+
+SYSTEM/ 
+└── (Node.js application) 
+  ├── routes/ # Application routes 
+  ├── controllers/ # Business logic 
+  ├── models/ # Database interaction 
+  ├── public/ # Static frontend files (HTML, CSS, JS) 
+  ├── config/ # Configuration files 
+  └── app.js # Entry point
